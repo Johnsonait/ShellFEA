@@ -1,0 +1,9 @@
+.db
+.db-shm
+.opendb
+.ipch
+.sln
+.prj
+.vcxproj
+.filters
+.user
