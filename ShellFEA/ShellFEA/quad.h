@@ -4,13 +4,18 @@ class Quad :
     private Element
 {
 private:
-
+    double thickness;
+    static constexpr const double SHAPE_PTS[4][2] = { {-1,-1},{1,-1},{1,1},{-1,1} };
 public:
+    static const uint64_t type = 4;
     Quad() = default;
-    Quad(std::vector<double>* n, std::vector<int>* n_id);
+    Quad(std::vector<std::vector<double>>* n, std::vector<int>* n_id, const double& t);
     ~Quad() = default;
 
-    double Jacobian(const double& zeta, const double& eta, const double& mu) override;
-    std::vector<std::vector<double>> Derivatives(const double& zeta, const double& eta, const double& mu) override;
+    double ShapeFunction(const uint64_t& n_id, const double& s, const double& t) override;
+    double ShapeDerivative(const uint64_t& n_id, const uint64_t& dir, const double& s, const double& t) override;
+
+    double Jacobian(const double& s, const double& t) override;
+    std::vector<std::vector<double>> Derivatives(const double& s, const double& t) override;
 };
 

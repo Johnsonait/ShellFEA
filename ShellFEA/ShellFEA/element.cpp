@@ -6,5 +6,5 @@ Element::Element()
 	node_ids = nullptr;
 }
 
-Element::Element(std::vector<double>* n, std::vector<int>* n_id) : nodes(n), node_ids(n_id) {}
+Element::Element(std::vector<std::vector<double>>* n, std::vector<int>* n_id) : nodes(n), node_ids(n_id) {}
 
