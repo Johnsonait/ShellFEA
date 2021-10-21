@@ -6,6 +6,8 @@ class Quad :
 private:
     double thickness;
     static constexpr const double SHAPE_PTS[4][2] = { {-1,-1},{1,-1},{1,1},{-1,1} };
+
+    double JCalc(double& x_s, double& x_t, double& y_s, double& y_t, const double& s, const double& t);
 public:
     static const uint64_t type = 4;
     Quad() = default;

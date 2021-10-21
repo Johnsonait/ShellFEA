@@ -26,10 +26,8 @@ double Quad::ShapeDerivative(const uint64_t& n_id, const uint64_t& dir, const do
 	return 0;
 }
 
-double Quad::Jacobian(const double& s, const double& t)
+double Quad::JCalc(double& x_s, double& x_t, double& y_s, double& y_t, const double& s, const double& t)
 {
-	double x_s = 0, x_t = 0, y_s = 0, y_t = 0;
-
 	for (int m = 0; m < nodes->size(); ++m)
 	{
 		double N_s = ShapeDerivative(m, 1, s, t);
@@ -42,22 +40,20 @@ double Quad::Jacobian(const double& s, const double& t)
 	return (x_s * y_t) - (x_t * y_s);
 }
 
+double Quad::Jacobian(const double& s, const double& t)
+{
+	double  x_s = 0, x_t = 0, y_s = 0, y_t = 0;
+
+	return JCalc(x_s, x_t, y_s, y_t, s, t);
+}
+
 std::vector<std::vector<double>> Quad::Derivatives(const double& s, const double& t)
 {
 	std::vector<std::vector<double>> ret = {};
 
 	double x_s = 0, x_t = 0, y_s = 0, y_t = 0;
 	//Prepare function derivatives and jacobian
-	for (int m = 0; m < nodes->size(); ++m)
-	{
-		double N_s = ShapeDerivative(m, 1, s, t);
-		double N_t = ShapeDerivative(m, 2, s, t);
-		x_s += (*nodes)[m][0] * N_s;
-		x_t += (*nodes)[m][0] * N_t;
-		y_s += (*nodes)[m][1] * N_s;
-		y_t += (*nodes)[m][1] * N_t;
-	}
-	double detJ = (x_s * y_t) - (x_t * y_s);
+	double detJ = JCalc(x_s, x_t, y_s, y_t, s, t);
 	//Use shape function derivatives and jacobians to find global derivatives for all nodes
 	for (int m = 0; m < nodes->size(); ++m)
 	{
